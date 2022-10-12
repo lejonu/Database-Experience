@@ -40,6 +40,16 @@ A tabela Pessoa terá como chave primária  o CNPJ ou CPF.
 
 [Relatório SQL - Pessoa](./SQL/select-pessoa.sql) 
 
+Um Produto pode estar em vários estoques e um estoque pode ter vários produtos idênticos.
 
+![alt](./img/Produto-EER.png)
+
+
+
+[SQL - Produto](./SQL/Schema-Produto.sql)
+
+[Mock SQL - Produto](./SQL/mock-produto.sql)
+
+[Relatório SQL - Produto](./SQL/select-produto.sql) 
 
 ###### License: MIT
