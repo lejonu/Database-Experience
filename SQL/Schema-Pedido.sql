@@ -7,7 +7,7 @@ DROP SCHEMA IF EXISTS `ecommerce` ;
 -- Schema ecommerce
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `ecommerce` ;
-USE `ecommerce`;
+USE `ecommerce` ;
 
 -- -----------------------------------------------------
 -- Table `ecommerce`.`Pessoa`
@@ -17,7 +17,9 @@ DROP TABLE IF EXISTS `ecommerce`.`Pessoa` ;
 CREATE TABLE IF NOT EXISTS `ecommerce`.`Pessoa` (
   `idPessoa` VARCHAR(18) NOT NULL,
   `tipoPessoa` ENUM('CNPJ', 'CPF') NULL DEFAULT NULL,
-  PRIMARY KEY (`idPessoa`));
+  PRIMARY KEY (`idPessoa`)
+);
+
 
 -- -----------------------------------------------------
 -- Table `ecommerce`.`Contato`
@@ -34,7 +36,8 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`Contato` (
   PRIMARY KEY (`idContato`, `idPessoa`),
   CONSTRAINT `fk_Contato_Pessoa`
     FOREIGN KEY (`idPessoa`)
-    REFERENCES `ecommerce`.`Pessoa` (`idPessoa`));
+    REFERENCES `ecommerce`.`Pessoa` (`idPessoa`)
+);
 
 -- -----------------------------------------------------
 -- Table `ecommerce`.`Endereco`
@@ -72,7 +75,6 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`Cliente` (
     REFERENCES `ecommerce`.`Pessoa` (`idPessoa`)
 );
 
-
 -- -----------------------------------------------------
 -- Table `ecommerce`.`CNPJ`
 -- -----------------------------------------------------
@@ -101,7 +103,6 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`Fornecedor` (
     REFERENCES `ecommerce`.`CNPJ` (`idPessoa`)
 );
 
-
 -- -----------------------------------------------------
 -- Table `ecommerce`.`Vendedor`
 -- -----------------------------------------------------
@@ -112,8 +113,7 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`Vendedor` (
   PRIMARY KEY (`idPessoa`),
   CONSTRAINT `fk_Vendedor_CNPJ`
     FOREIGN KEY (`idPessoa`)
-    REFERENCES `ecommerce`.`CNPJ` (`idPessoa`)
-);
+    REFERENCES `ecommerce`.`CNPJ` (`idPessoa`));
 
 -- -----------------------------------------------------
 -- Table `ecommerce`.`Produto`
@@ -127,6 +127,7 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`Produto` (
   `valor` FLOAT NULL,
   PRIMARY KEY (`idProduto`)
 );
+
 
 -- -----------------------------------------------------
 -- Table `ecommerce`.`Estoque`
@@ -160,7 +161,9 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`Estoque_has_Produto` (
   PRIMARY KEY (`idProduto`, `idPessoa`, `idContato`),
   CONSTRAINT `fk_Estoque_has_Produto_Produto`
     FOREIGN KEY (`idProduto`)
-    REFERENCES `ecommerce`.`Produto` (`idProduto`),
+    REFERENCES `ecommerce`.`Produto` (`idProduto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Estoque_has_Produto_Estoque1`
     FOREIGN KEY (`idPessoa` , `idContato`)
     REFERENCES `ecommerce`.`Estoque` (`idPessoa` , `idContato`)
@@ -177,6 +180,7 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`Pedido` (
   `idPessoaVendedor` VARCHAR(18) NULL,
   `dataPedido` DATE NULL,
   `statusPedido` ENUM('Em Processamento', 'Cancelado', 'Aprovado') NULL DEFAULT 'Em Processamento',
+  `formaPagamento` ENUM('Boleto', 'Cartão', 'Dois Cartões') NULL DEFAULT 'Boleto',
   PRIMARY KEY (`idPedido`, `idPessoa`),
   CONSTRAINT `fk_Pedido_Cliente1`
     FOREIGN KEY (`idPessoa`)
@@ -187,6 +191,9 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`Pedido` (
     FOREIGN KEY (`idPessoaVendedor`)
     REFERENCES `ecommerce`.`Vendedor` (`idPessoa`)
 );
+
+CREATE INDEX `fk_Pedido_Vendedor1_idx` ON `ecommerce`.`Pedido` (`idPessoaVendedor` ASC) VISIBLE;
+
 
 -- -----------------------------------------------------
 -- Table `ecommerce`.`Pedido_has_Produto`
@@ -199,7 +206,10 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`Pedido_has_Produto` (
     `quantidade` INT NULL,
     PRIMARY KEY (`idPedido` , `idProduto`),
     CONSTRAINT `fk_Pedido_has_Produto_Pedido1` FOREIGN KEY (`idPedido`)
-        REFERENCES `ecommerce`.`Pedido` (`idPedido`),
+        REFERENCES `ecommerce`.`Pedido` (`idPedido`)
+        ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT `fk_Pedido_has_Produto_Produto1` FOREIGN KEY (`idProduto`)
         REFERENCES `ecommerce`.`Produto` (`idProduto`)
 );
+
+
