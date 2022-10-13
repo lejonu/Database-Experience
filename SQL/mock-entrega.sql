@@ -1,0 +1,3 @@
+INSERT INTO `ecommerce`.`Entrega` (`idPedido`, `idPessoa`, `statusEntrega`, `dataAtualizacao`) VALUES ('1', '306.225.145-04', default, '2022-10-12');
+INSERT INTO `ecommerce`.`Entrega` (`idPedido`, `idPessoa`, `statusEntrega`, `dataAtualizacao`) VALUES ('2', '400.322.210-53', 'Entregue', '2022-10-12');
+INSERT INTO `ecommerce`.`Entrega` (`idPedido`, `idPessoa`, `statusEntrega`, `dataAtualizacao`) VALUES ('4', '788.478.701-60', 'Cancelada', '2022-10-12');
