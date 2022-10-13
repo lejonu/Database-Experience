@@ -52,4 +52,16 @@ Um Produto pode estar em vários estoques e um estoque pode ter vários produtos
 
 [Relatório SQL - Produto](./SQL/select-produto.sql) 
 
+
+
+![alt](./img/Pedido-EER.png)
+
+
+
+[SQL - Pedido](./SQL/Schema-Pedido.sql)
+
+[Mock SQL - Pedido](./SQL/mock-pedido.sql)
+
+[Relatório SQL - Pedido](./SQL/select-pedido.sql) 
+
 ###### License: MIT
